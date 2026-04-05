@@ -299,6 +299,7 @@ nav.scrolled .nav-links a:hover { color: #9a7540; }
   padding: 52px; display: grid; grid-template-columns: 1fr auto;
   align-items: center; gap: 40px;
   transition: border-color 0.3s; position: relative; overflow: hidden;
+  text-decoration: none;
 }
 .venture::before { content: ''; position: absolute; top: -100px; right: -100px; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(42,170,146,0.06), transparent 70%); pointer-events: none; }
 .venture:hover { border-color: #2aaa92; }
@@ -545,7 +546,7 @@ footer {
       <div class="section-lbl">Digital Ventures</div>
       <h2 class="section-title">We don't just advise.<br>We <span class="t">build.</span></h2>
     </div>
-    <div class="venture reveal">
+    <a class="venture reveal" href="https://raceform.app/" target="_blank" rel="noopener noreferrer">
       <div>
         <div class="venture-live"><span class="live-dot"></span> In development</div>
         <div class="venture-name">Raceform</div>
@@ -554,7 +555,7 @@ footer {
       <div class="venture-arrow">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
       </div>
-    </div>
+    </a>
   </div>
 </section>
 
