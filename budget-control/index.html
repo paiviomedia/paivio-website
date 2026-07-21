@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budget Control — Paivio</title>
+<meta name="description" content="Budget control for performance teams. Forecast month-end spend, compare pacing models, and keep media budgets visible in real time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f0efeb;
+  --surface: #f7f6f1;
+  --surface-strong: #ffffff;
+  --ink: #1a1a2e;
+  --muted: #5a5a6a;
+  --line: rgba(26, 26, 46, 0.1);
+  --line-strong: rgba(26, 26, 46, 0.16);
+  --gold: #9a7540;
+  --gold-soft: rgba(154, 117, 64, 0.12);
+  --teal: #2aaa92;
+  --teal-soft: rgba(42, 170, 146, 0.12);
+  --violet: #7060e8;
+  --violet-soft: rgba(112, 96, 232, 0.12);
+  --rose: #d44f65;
+  --rose-soft: rgba(212, 79, 101, 0.12);
+  --hero: #10111b;
+  --hero-ink: #f2f1ed;
+  --hero-muted: rgba(242, 241, 237, 0.72);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--bg);
+}
+a { color: inherit; }
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  padding: 20px 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(242, 241, 237, 0.08);
+  transition: background 0.3s, border-color 0.3s, backdrop-filter 0.3s;
+}
+nav.scrolled {
+  background: rgba(240, 239, 235, 0.94);
+  backdrop-filter: blur(16px);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+.logo-rest { color: var(--hero-ink); }
+.logo-ai { color: #d9b67d; }
+nav.scrolled .logo-rest { color: var(--ink); }
+nav.scrolled .logo-ai { color: var(--gold); }
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+.nav-links a {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(242, 241, 237, 0.74);
+}
+.nav-links a:hover { color: #fff; }
+nav.scrolled .nav-links a { color: var(--muted); }
+nav.scrolled .nav-links a:hover { color: var(--gold); }
+.nav-cta {
+  background: #fff !important;
+  color: #111220 !important;
+  padding: 14px 24px;
+  border-radius: 999px;
+}
+.hero {
+  min-height: 76vh;
+  padding: 136px 52px 92px;
+  background:
+    radial-gradient(circle at 82% 18%, rgba(42, 170, 146, 0.18), transparent 24%),
+    radial-gradient(circle at 16% 8%, rgba(154, 117, 64, 0.14), transparent 26%),
+    linear-gradient(180deg, rgba(7, 10, 18, 0.92) 0%, rgba(16, 17, 27, 0.96) 100%);
+  color: var(--hero-ink);
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: auto -10% -24% 40%;
+  height: 420px;
+  background: radial-gradient(circle, rgba(112, 96, 232, 0.14), transparent 68%);
+  pointer-events: none;
+}
+.hero-inner,
+.section-inner,
+.footer-inner {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.eyebrow,
+.section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: rgba(242, 241, 237, 0.86);
+  border: 1px solid rgba(242, 241, 237, 0.1);
+  background: rgba(18, 18, 25, 0.76);
+  border-radius: 999px;
+  padding: 10px 18px;
+  margin-bottom: 28px;
+}
+.eyebrow::before {
+  content: '✦';
+  color: #d9b67d;
+  font-size: 11px;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+  gap: 44px;
+  align-items: end;
+}
+.hero-copy h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(40px, 5.7vw, 72px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  max-width: 780px;
+  margin-bottom: 22px;
+}
+.hero-copy h1 em {
+  font-style: italic;
+  color: rgba(242, 241, 237, 0.38);
+}
+.hero-copy p {
+  max-width: 700px;
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--hero-muted);
+  margin-bottom: 28px;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 16px 28px;
+  font-weight: 700;
+}
+.btn-primary {
+  background: #fff;
+  color: #111220;
+}
+.btn-secondary {
+  background: rgba(18, 18, 25, 0.86);
+  color: #fff;
+  border: 1px solid rgba(242, 241, 237, 0.08);
+}
+.hero-notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.note-chip {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(242, 241, 237, 0.78);
+  border: 1px solid rgba(242, 241, 237, 0.12);
+  background: rgba(9, 11, 20, 0.42);
+  border-radius: 999px;
+  padding: 8px 12px;
+}
+.hero-panel {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(242, 241, 237, 0.1);
+  border-radius: 22px;
+  padding: 24px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+}
+.panel-kicker {
+  color: #d9b67d;
+  margin-bottom: 14px;
+}
+.panel-value {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(40px, 4vw, 54px);
+  line-height: 0.96;
+  margin-bottom: 12px;
+}
+.panel-copy {
+  color: rgba(242, 241, 237, 0.68);
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+.panel-stack {
+  display: grid;
+  gap: 12px;
+}
+.panel-metric {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(242, 241, 237, 0.08);
+}
+.panel-metric:first-child { border-top: 0; padding-top: 0; }
+.panel-metric span:first-child {
+  color: rgba(242, 241, 237, 0.58);
+  font-size: 13px;
+}
+.panel-metric span:last-child {
+  font-weight: 700;
+  color: #fff;
+}
+.section {
+  padding: 104px 52px;
+}
+.section-alt {
+  background: #e8e7e2;
+}
+.section-label {
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.section-label::before {
+  content: '';
+  width: 22px;
+  height: 1px;
+  background: var(--gold);
+}
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(34px, 4vw, 54px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  max-width: 760px;
+}
+.section-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+.section-intro {
+  max-width: 720px;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.75;
+}
+.tool-shell {
+  margin-top: 52px;
+  display: grid;
+  gap: 18px;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+.card {
+  background: var(--surface-strong);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 18px 40px rgba(26, 26, 46, 0.06);
+}
+.card-label {
+  display: block;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 10px;
+}
+.input {
+  width: 100%;
+  border: 1px solid var(--line-strong);
+  background: #fff;
+  border-radius: 12px;
+  padding: 13px 14px;
+  font: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  outline: none;
+}
+.input:focus {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 4px rgba(42, 170, 146, 0.12);
+}
+.metric-card {
+  min-height: 132px;
+}
+.metric-k {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.metric-v {
+  font-family: 'Syne', sans-serif;
+  font-size: 34px;
+  line-height: 1;
+  margin-top: 12px;
+}
+.metric-v.teal { color: var(--teal); }
+.metric-v.gold { color: var(--gold); }
+.metric-v.violet { color: var(--violet); }
+.metric-v.rose { color: var(--rose); }
+.metric-u {
+  font-size: 13px;
+  color: var(--muted);
+  margin-left: 6px;
+  font-family: 'DM Sans', sans-serif;
+}
+.progress-card {
+  display: grid;
+  gap: 14px;
+}
+.bar {
+  height: 12px;
+  background: rgba(26, 26, 46, 0.06);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid rgba(26, 26, 46, 0.08);
+}
+.bar > span {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--teal), var(--violet));
+  transition: width 0.35s ease;
+}
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.forecast-card {
+  position: relative;
+  overflow: hidden;
+}
+.forecast-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--teal), var(--violet));
+}
+.model-pill {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--violet);
+  background: var(--violet-soft);
+  border-radius: 999px;
+  padding: 5px 10px;
+  margin-bottom: 18px;
+}
+.forecast-value {
+  font-family: 'Syne', sans-serif;
+  font-size: 42px;
+  line-height: 0.96;
+  margin-bottom: 12px;
+}
+.forecast-copy,
+.forecast-formula {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.forecast-formula {
+  margin-top: 8px;
+}
+.compare-card .compare-row + .compare-row { margin-top: 16px; }
+.compare-label {
+  font-size: 13px;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.compare-track {
+  height: 28px;
+  border-radius: 10px;
+  background: rgba(26, 26, 46, 0.06);
+  overflow: hidden;
+  border: 1px solid rgba(26, 26, 46, 0.08);
+}
+.compare-fill {
+  height: 100%;
+  width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  transition: width 0.4s ease;
+}
+.compare-fill.c1 { background: linear-gradient(90deg, #2aaa92, #3ecfb2); color: #08241f; }
+.compare-fill.c2 { background: linear-gradient(90deg, #7060e8, #8b7cf8); color: #fff; }
+.compare-fill.c3 { background: linear-gradient(90deg, #d9b67d, #f0cf94); color: #3d2c14; }
+.info-grid {
+  margin-top: 52px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.info-card h3,
+.contact-card h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  line-height: 1.08;
+  margin-bottom: 12px;
+}
+.info-card p,
+.contact-card p {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.72;
+}
+.contact-grid {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  gap: 18px;
+}
+.contact-card {
+  min-height: 100%;
+}
+.contact-lines {
+  margin-top: 24px;
+  display: grid;
+  gap: 12px;
+}
+.contact-line {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.contact-line span:first-child {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.contact-line a {
+  text-decoration: none;
+}
+.footer {
+  background: #0e0e1a;
+  color: rgba(242, 241, 237, 0.48);
+  border-top: 1px solid rgba(176, 141, 87, 0.2);
+  padding: 32px 52px;
+}
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.footer-mark {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.footer-mark .r { color: rgba(242, 241, 237, 0.9); }
+.footer-mark .a { color: var(--gold); }
+.footer-copy {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+@media (max-width: 1024px) {
+  .hero-grid,
+  .contact-grid,
+  .forecast-grid,
+  .grid-3,
+  .grid-4,
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  .hero, .section { padding-left: 24px; padding-right: 24px; }
+  .hero { padding-top: 112px; }
+  .footer { padding: 28px 24px; }
+  .hero-actions { flex-direction: column; align-items: flex-start; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+  .contact-line { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <a href="/" class="nav-logo">
+    <span class="logo-rest">P</span><span class="logo-ai">AI</span><span class="logo-rest">VIO</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#method">Method</a></li>
+    <li><a href="/#ventures">Ventures</a></li>
+    <li><a href="/#contact" class="nav-cta">Let's talk</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner hero-grid">
+    <div class="hero-copy">
+      <div class="eyebrow">Operational Budget Control</div>
+      <h1>Keep media <em>spend visible</em> before the month gets away from you.</h1>
+      <p>Forecast month-end paid media spend from the same inputs your team already tracks: current spend, daily budget, and the number of days left in the month. No spreadsheet friction, no guesswork.</p>
+      <div class="hero-actions">
+        <a href="#calculator" class="btn-primary">Open the dashboard</a>
+        <a href="/#contact" class="btn-secondary">Talk to Paivio</a>
+      </div>
+      <div class="hero-notes">
+        <span class="note-chip">Pacing clarity</span>
+        <span class="note-chip">Forecast models</span>
+        <span class="note-chip">Performance teams</span>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <div class="panel-kicker eyebrow" style="margin-bottom: 18px;">What this page does</div>
+      <div class="panel-value">Budget control for fast-moving ad accounts.</div>
+      <p class="panel-copy">Built for operators who need a quick answer to one question: where does this month land if we keep spending like this?</p>
+      <div class="panel-stack">
+        <div class="panel-metric"><span>Forecast A</span><span>Daily budget × full month</span></div>
+        <div class="panel-metric"><span>Forecast B</span><span>Current spend + remaining days</span></div>
+        <div class="panel-metric"><span>Use case</span><span>Meta, paid social, demand gen</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt" id="calculator">
+  <div class="section-inner">
+    <div class="section-label">Interactive Tool</div>
+    <h2 class="section-title">Forecast spend with a <em>cleaner</em> control layer.</h2>
+    <p class="section-intro">Enter the month, your spend to date, and the daily ad spend you plan to run from now. The dashboard updates instantly and saves your latest inputs in the browser.</p>
+
+    <div class="tool-shell">
+      <div class="grid-3">
+        <div class="card">
+          <label class="card-label" for="month">Month</label>
+          <input class="input" type="month" id="month">
+        </div>
+        <div class="card">
+          <label class="card-label" for="spent">Spend to date (DKK)</label>
+          <input class="input" type="number" id="spent" min="0" step="100" placeholder="e.g. 45000">
+        </div>
+        <div class="card">
+          <label class="card-label" for="daily">New daily ad spend (DKK)</label>
+          <input class="input" type="number" id="daily" min="0" step="100" placeholder="e.g. 3500">
+        </div>
+      </div>
+
+      <div class="grid-4">
+        <div class="card metric-card">
+          <div class="metric-k">Days in month</div>
+          <div class="metric-v gold" id="daysTotal">–</div>
+        </div>
+        <div class="card metric-card">
+          <div class="metric-k">Days elapsed</div>
+          <div class="metric-v" id="daysGone">–</div>
+        </div>
+        <div class="card metric-card">
+          <div class="metric-k">Days remaining</div>
+          <div class="metric-v violet" id="daysLeft">–</div>
+        </div>
+        <div class="card metric-card">
+          <div class="metric-k">Average spent / day</div>
+          <div class="metric-v teal"><span id="perDay">–</span><span class="metric-u">DKK</span></div>
+        </div>
+      </div>
+
+      <div class="card progress-card">
+        <div class="section-label" style="margin-bottom: 0;">Month Progress</div>
+        <div class="bar"><span id="progFill"></span></div>
+        <div class="progress-meta"><span id="progText">Select a month to begin</span><span id="progPct"></span></div>
+      </div>
+
+      <div class="forecast-grid">
+        <div class="card forecast-card">
+          <span class="model-pill">Forecast Model A</span>
+          <div class="forecast-value" id="projA">–</div>
+          <p class="forecast-copy">Use the new daily budget as if it runs across every day of the selected month.</p>
+          <p class="forecast-formula" id="projAformula"></p>
+        </div>
+        <div class="card forecast-card">
+          <span class="model-pill">Forecast Model B</span>
+          <div class="forecast-value" id="projB">–</div>
+          <p class="forecast-copy">Add current spend to the remaining days at the new daily budget.</p>
+          <p class="forecast-formula" id="projBformula"></p>
+        </div>
+      </div>
+
+      <div class="card compare-card">
+        <div class="section-label" style="margin-bottom: 18px;">Spend Comparison</div>
+        <div class="compare-row">
+          <div class="compare-label">Spend to date</div>
+          <div class="compare-track"><div class="compare-fill c1" id="barSpent"></div></div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-label">Forecast A — daily spend × full month</div>
+          <div class="compare-track"><div class="compare-fill c2" id="barA"></div></div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-label">Forecast B — current spend + remaining days</div>
+          <div class="compare-track"><div class="compare-fill c3" id="barB"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">Why It Matters</div>
+    <h2 class="section-title">A useful <em>decision layer</em>, not just a calculator.</h2>
+    <div class="info-grid">
+      <div class="card info-card">
+        <h3>See pacing early</h3>
+        <p>Budget issues usually show up before the month ends, but only if someone is watching the trajectory. This page turns that trajectory into a visible control point.</p>
+      </div>
+      <div class="card info-card">
+        <h3>Compare operating assumptions</h3>
+        <p>The two forecast models are intentionally simple. They make it easier to discuss whether the account is being planned from a full-month assumption or from remaining runway.</p>
+      </div>
+      <div class="card info-card">
+        <h3>Use it as a workflow building block</h3>
+        <p>This same logic can be embedded into reporting automations, Slack alerts, budget pacing dashboards, or AI-assisted media operations inside a broader Paivio workflow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="section-label">Next Step</div>
+    <h2 class="section-title">Want this connected to your <em>real reporting stack</em>?</h2>
+    <div class="contact-grid">
+      <div class="card contact-card">
+        <h3>From simple visibility to operational automation</h3>
+        <p>This public dashboard is a lightweight version of a bigger idea: turning paid media control into an owned internal system. We can connect reporting, pacing, forecasting, creative analysis, and action prompts into one workflow.</p>
+        <div class="contact-lines">
+          <div class="contact-line"><span>Use case</span><span>Meta budget pacing, campaign forecasting, weekly reporting, internal ops dashboards</span></div>
+          <div class="contact-line"><span>Stack</span><span>n8n, Meta data, LLM analysis, internal dashboards, alerts and operator workflows</span></div>
+          <div class="contact-line"><span>Output</span><span>Less spreadsheet work, earlier budget visibility, and clearer decisions on when to scale or slow spend</span></div>
+        </div>
+      </div>
+      <div class="card contact-card">
+        <h3>Talk to Paivio</h3>
+        <p>If you want this turned into a client-ready or internal budget control system, we can help design the workflow around your media operation.</p>
+        <div class="contact-lines">
+          <div class="contact-line"><span>Email</span><a href="mailto:hello@paivio.design">hello@paivio.design</a></div>
+          <div class="contact-line"><span>Website</span><a href="/">paiviomedia.com</a></div>
+          <div class="contact-line"><span>Focus</span><span>AI-powered growth strategy, workflow design, performance systems</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-mark"><span class="r">P</span><span class="a">AI</span><span class="r">VIO</span></div>
+    <div class="footer-copy">Budget Control Tool — Paivio</div>
+  </div>
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+const fmt = n => isFinite(n) ? Math.round(n).toLocaleString('da-DK') : '–';
+const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const today = new Date();
+const store = key => { try { return localStorage.getItem(key); } catch (e) { return null; } };
+const save = (key, value) => { try { localStorage.setItem(key, value); } catch (e) {} };
+function daysInMonth(year, monthIndex) { return new Date(year, monthIndex + 1, 0).getDate(); }
+function compute() {
+  const monthValue = $('month').value;
+  const spent = parseFloat($('spent').value);
+  const daily = parseFloat($('daily').value);
+  save('bc_month', monthValue);
+  save('bc_spent', $('spent').value);
+  save('bc_daily', $('daily').value);
+  if (!monthValue) return;
+  const [year, month] = monthValue.split('-').map(Number);
+  const monthIndex = month - 1;
+  const total = daysInMonth(year, monthIndex);
+  const isSameMonth = year === today.getFullYear() && monthIndex === today.getMonth();
+  const isPastMonth = year < today.getFullYear() || (year === today.getFullYear() && monthIndex < today.getMonth());
+  let elapsed = 0;
+  if (isSameMonth) elapsed = today.getDate();
+  else if (isPastMonth) elapsed = total;
+  const remaining = total - elapsed;
+  $('daysTotal').textContent = total;
+  $('daysGone').textContent = elapsed;
+  $('daysLeft').textContent = remaining;
+  const perDay = isFinite(spent) && elapsed > 0 ? spent / elapsed : NaN;
+  $('perDay').textContent = isFinite(perDay) ? fmt(perDay) : '–';
+  const pct = total ? Math.round((elapsed / total) * 100) : 0;
+  $('progFill').style.width = pct + '%';
+  $('progPct').textContent = pct + '%';
+  $('progText').textContent = `${elapsed} of ${total} days elapsed in ${monthNames[monthIndex]} ${year}`;
+  const projA = isFinite(daily) ? daily * total : NaN;
+  const projB = isFinite(spent) && isFinite(daily) ? spent + (daily * remaining) : NaN;
+  $('projA').textContent = isFinite(projA) ? fmt(projA) + ' DKK' : '–';
+  $('projB').textContent = isFinite(projB) ? fmt(projB) + ' DKK' : '–';
+  $('projAformula').textContent = isFinite(daily) ? `${fmt(daily)} DKK × ${total} days` : '';
+  $('projBformula').textContent = isFinite(spent) && isFinite(daily) ? `${fmt(spent)} DKK + ${fmt(daily)} DKK × ${remaining} days` : '';
+  const values = [isFinite(spent) ? spent : 0, isFinite(projA) ? projA : 0, isFinite(projB) ? projB : 0];
+  const max = Math.max(...values, 1);
+  const setBar = (el, val) => {
+    el.style.width = Math.max((val / max) * 100, 0) + '%';
+    el.textContent = val > 0 ? fmt(val) + ' DKK' : '';
+  };
+  setBar($('barSpent'), values[0]);
+  setBar($('barA'), values[1]);
+  setBar($('barB'), values[2]);
+}
+$('month').value = store('bc_month') || `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}`;
+if (store('bc_spent') !== null) $('spent').value = store('bc_spent');
+if (store('bc_daily') !== null) $('daily').value = store('bc_daily');
+['month', 'spent', 'daily'].forEach(id => $(id).addEventListener('input', compute));
+compute();
+window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 60));
+</script>
+</body>
+</html>
