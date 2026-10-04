@@ -206,6 +206,60 @@ nav.scrolled .nav-links a:hover { color: #9a7540; }
 .dv { background: #8b7cf8; }
 .dr { background: #e8647a; }
 
+/* ── CLIENT RAIL ───────────────────────────── */
+.client-rail-section {
+  background: #f0efeb;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  padding: 34px 0;
+  overflow: hidden;
+}
+.client-rail-head {
+  max-width: 1280px;
+  margin: 0 auto 22px;
+  padding: 0 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
+.client-rail-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #9a7540;
+}
+.client-rail-copy {
+  max-width: 520px;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.7;
+  color: #5a5a6a;
+  text-align: right;
+}
+.client-track {
+  display: flex;
+  width: max-content;
+  animation: clientRoll 38s linear infinite;
+}
+.client-item {
+  min-width: 230px;
+  margin-right: 12px;
+  padding: 22px 28px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.56);
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  color: #1a1a2e;
+  white-space: nowrap;
+}
+.client-item em {
+  color: #9a7540;
+  font-style: normal;
+}
+
 /* ── SHARED SECTION STYLES ────────────────── */
 .section-lbl {
   font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 300;
@@ -366,7 +420,14 @@ footer {
 
 /* ── ANIMATIONS ────────────────────────────── */
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes clientRoll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes pulse { 0%,100% { opacity:1; transform: scale(1); } 50% { opacity:0.4; transform: scale(0.75); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .client-track,
+  .live-dot { animation: none; }
+}
 
 /* ── RESPONSIVE ────────────────────────────── */
 @media (max-width: 900px) {
@@ -385,6 +446,10 @@ footer {
   .about-section, .services-section, .method-section, .ventures-section, .contact-section { padding: 80px 24px; }
   .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 40px; }
   .cards { grid-template-columns: 1fr; }
+  .client-rail-section { padding: 30px 0; }
+  .client-rail-head { padding: 0 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
+  .client-rail-copy { text-align: left; }
+  .client-item { min-width: 190px; padding: 20px 24px; font-size: 18px; }
   .services-hdr { flex-direction: column; align-items: flex-start; }
   .steps { grid-template-columns: 1fr 1fr; gap: 40px; }
   .steps::before { display: none; }
@@ -456,6 +521,28 @@ footer {
     <div class="marquee-item">Fashion & Lifestyle Brands <span class="dot dv"></span></div>
   </div>
 </div>
+
+<!-- CLIENTS -->
+<section class="client-rail-section" aria-label="Selected Paivio clients">
+  <div class="client-rail-head">
+    <div class="client-rail-label">Selected clients</div>
+    <p class="client-rail-copy">Paid media, content execution, and performance systems for ecommerce, marketplace, food, sport, and healthcare brands.</p>
+  </div>
+  <div class="client-track" id="clients">
+    <div class="client-item">Trendsales</div>
+    <div class="client-item">ReShopper</div>
+    <div class="client-item">Loegismose</div>
+    <div class="client-item">Breschel<em>Sport</em></div>
+    <div class="client-item">VinMedMere.dk</div>
+    <div class="client-item">Skensvedtand.dk</div>
+    <div class="client-item">Trendsales</div>
+    <div class="client-item">ReShopper</div>
+    <div class="client-item">Loegismose</div>
+    <div class="client-item">Breschel<em>Sport</em></div>
+    <div class="client-item">VinMedMere.dk</div>
+    <div class="client-item">Skensvedtand.dk</div>
+  </div>
+</section>
 
 <!-- ABOUT -->
 <section class="about-section" id="about">
