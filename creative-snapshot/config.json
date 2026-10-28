@@ -1,5 +1,5 @@
 {
-  "mode": "unconfigured",
-  "endpoint": null,
+  "mode": "email-pending",
+  "endpoint": "https://formsubmit.co/paivio.media@pm.me",
   "siteKey": null
 }

@@ -1,5 +1,7 @@
 # Creative Snapshot
 
+> 29 October update: MODEL-RESOURCES.md supersedes the original delivery proposal below. FormSubmit is now approved, direct email routing is prepared and recipient activation is complete and inbox receipt is pending. The shared footer also includes Creative Snapshot and four model resources. There are now 10 automated tests. No production deployment.
+
 Branch: `feature/creative-snapshot`. Preview only. No production deployment.
 
 ## Implemented

@@ -8,6 +8,11 @@ on:
       - 'scripts/preview.mjs'
       - 'tests/creative-snapshot.test.mjs'
       - 'index.html'
+      - 'frameworks/**'
+      - 'the-copenhagen-method/**'
+      - 'assets/frameworks.css'
+      - 'assets/resource-footer.css'
+      - 'tests/frameworks.test.mjs'
       - '.github/workflows/creative-snapshot-tests.yml'
   push:
     branches: ['feature/creative-snapshot']
@@ -21,6 +26,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: node --test tests/creative-snapshot.test.mjs
+      - run: node --test
       - run: node --check assets/creative-snapshot.js
       - run: node --check backend/creative-snapshot/worker.mjs
