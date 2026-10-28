@@ -1,0 +1,26 @@
+name: Creative Snapshot checks
+on:
+  pull_request:
+    paths:
+      - 'creative-snapshot/**'
+      - 'assets/creative-snapshot.*'
+      - 'backend/creative-snapshot/**'
+      - 'scripts/preview.mjs'
+      - 'tests/creative-snapshot.test.mjs'
+      - 'index.html'
+      - '.github/workflows/creative-snapshot-tests.yml'
+  push:
+    branches: ['feature/creative-snapshot']
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test tests/creative-snapshot.test.mjs
+      - run: node --check assets/creative-snapshot.js
+      - run: node --check backend/creative-snapshot/worker.mjs
