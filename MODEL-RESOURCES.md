@@ -33,7 +33,7 @@ These practices support crawlability and understanding. Indexing, rankings and A
 
 The owner approved FormSubmit during this conversation. Config now targets `https://formsubmit.co/paivio.media@pm.me`, with native secure form POST, the provider's default CAPTCHA enabled, `_honey`, a branded subject, lead source and a return page at `/creative-snapshot/thank-you/`.
 
-A setup request was sent to the authorised recipient only. HTTP 200 returned `success:false` and explicitly stated that an activation email with an Activate Form link was sent. This is **not evidence of delivered leads**. The owner subsequently confirmed activation. A second setup test returned HTTP 200, success:true and The form was submitted successfully. Provider acceptance is verified; inbox receipt still needs owner confirmation.
+A setup request was sent to the authorised recipient only. HTTP 200 returned `success:false` and explicitly stated that an activation email with an Activate Form link was sent. This is **not evidence of delivered leads**. The owner subsequently confirmed activation. A second setup test returned HTTP 200, success:true and The form was submitted successfully. Provider acceptance is verified; the owner subsequently confirmed inbox receipt. The first delivery test omitted the optional spend value. Email submissions now include a readable Monthly paid social spend field, using Not provided when no range is selected.
 
 Static config is `email-pending`, so public submissions are disabled. Local preview continues to use local-only storage. Once activation and recipient receipt are confirmed, switch mode to `email`. No Google Sheets integration is added. The earlier Worker/D1/Turnstile code is an unused alternative and is not deployed.
 
