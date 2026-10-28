@@ -639,11 +639,11 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
           <input class="input" type="month" id="month">
         </div>
         <div class="card">
-          <label class="card-label" for="spent">Spend to date (DKK)</label>
+          <label class="card-label" for="spent">Spend to date</label>
           <input class="input" type="number" id="spent" min="0" step="100" placeholder="e.g. 45000">
         </div>
         <div class="card">
-          <label class="card-label" for="daily">New daily ad spend (DKK)</label>
+          <label class="card-label" for="daily">New daily ad spend</label>
           <input class="input" type="number" id="daily" min="0" step="100" placeholder="e.g. 3500">
         </div>
       </div>
@@ -663,7 +663,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{o
         </div>
         <div class="card metric-card">
           <div class="metric-k">Average spent / day</div>
-          <div class="metric-v teal"><span id="perDay">–</span><span class="metric-u">DKK</span></div>
+          <div class="metric-v teal"><span id="perDay">–</span></div>
         </div>
       </div>
 
@@ -798,15 +798,15 @@ function compute() {
   $('progText').textContent = `${elapsed} of ${total} days elapsed in ${monthNames[monthIndex]} ${year}`;
   const projA = isFinite(daily) ? daily * total : NaN;
   const projB = isFinite(spent) && isFinite(daily) ? spent + (daily * remaining) : NaN;
-  $('projA').textContent = isFinite(projA) ? fmt(projA) + ' DKK' : '–';
-  $('projB').textContent = isFinite(projB) ? fmt(projB) + ' DKK' : '–';
-  $('projAformula').textContent = isFinite(daily) ? `${fmt(daily)} DKK × ${total} days` : '';
-  $('projBformula').textContent = isFinite(spent) && isFinite(daily) ? `${fmt(spent)} DKK + ${fmt(daily)} DKK × ${remaining} days` : '';
+  $('projA').textContent = isFinite(projA) ? fmt(projA) : '–';
+  $('projB').textContent = isFinite(projB) ? fmt(projB) : '–';
+  $('projAformula').textContent = isFinite(daily) ? `${fmt(daily)} × ${total} days` : '';
+  $('projBformula').textContent = isFinite(spent) && isFinite(daily) ? `${fmt(spent)} + ${fmt(daily)} × ${remaining} days` : '';
   const values = [isFinite(spent) ? spent : 0, isFinite(projA) ? projA : 0, isFinite(projB) ? projB : 0];
   const max = Math.max(...values, 1);
   const setBar = (el, val) => {
     el.style.width = Math.max((val / max) * 100, 0) + '%';
-    el.textContent = val > 0 ? fmt(val) + ' DKK' : '';
+    el.textContent = val > 0 ? fmt(val) : '';
   };
   setBar($('barSpent'), values[0]);
   setBar($('barA'), values[1]);
