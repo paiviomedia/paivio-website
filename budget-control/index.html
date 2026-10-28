@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Budget Control — Paivio</title>
+<title>Budget Control | Paivio Media</title>
 <meta name="description" content="Budget control for performance teams. Forecast month-end spend, compare pacing models, and keep media budgets visible in real time.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #f0efeb;
@@ -31,7 +31,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-size: 16px;
   line-height: 1.6;
   color: var(--ink);
@@ -57,7 +57,7 @@ nav.scrolled {
   border-color: rgba(0, 0, 0, 0.08);
 }
 .nav-logo {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-weight: 800;
   font-size: 20px;
   letter-spacing: 0.1em;
@@ -151,7 +151,7 @@ nav.scrolled .nav-links a:hover { color: var(--gold); }
   align-items: end;
 }
 .hero-copy h1 {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-size: clamp(40px, 5.7vw, 72px);
   line-height: 0.95;
   letter-spacing: -0.03em;
@@ -223,7 +223,7 @@ nav.scrolled .nav-links a:hover { color: var(--gold); }
   margin-bottom: 14px;
 }
 .panel-value {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-size: clamp(40px, 4vw, 54px);
   line-height: 0.96;
   margin-bottom: 12px;
@@ -273,7 +273,7 @@ nav.scrolled .nav-links a:hover { color: var(--gold); }
   background: var(--gold);
 }
 .section-title {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-size: clamp(34px, 4vw, 54px);
   line-height: 1;
   letter-spacing: -0.03em;
@@ -348,7 +348,7 @@ nav.scrolled .nav-links a:hover { color: var(--gold); }
   color: var(--muted);
 }
 .metric-v {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-size: 34px;
   line-height: 1;
   margin-top: 12px;
@@ -361,7 +361,7 @@ nav.scrolled .nav-links a:hover { color: var(--gold); }
   font-size: 13px;
   color: var(--muted);
   margin-left: 6px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Manrope', sans-serif;
 }
 .progress-card {
   display: grid;
@@ -417,7 +417,7 @@ nav.scrolled .nav-links a:hover { color: var(--gold); }
   margin-bottom: 18px;
 }
 .forecast-value {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-size: 42px;
   line-height: 0.96;
   margin-bottom: 12px;
@@ -466,7 +466,7 @@ nav.scrolled .nav-links a:hover { color: var(--gold); }
 }
 .info-card h3,
 .contact-card h3 {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-size: 22px;
   line-height: 1.08;
   margin-bottom: 12px;
@@ -520,7 +520,7 @@ nav.scrolled .nav-links a:hover { color: var(--gold); }
   gap: 24px;
 }
 .footer-mark {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Manrope', sans-serif;
   font-weight: 800;
   font-size: 16px;
   letter-spacing: 0.12em;
@@ -555,17 +555,45 @@ nav.scrolled .nav-links a:hover { color: var(--gold); }
   .contact-line { grid-template-columns: 1fr; gap: 4px; }
 }
 </style>
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="canonical" href="https://paiviomedia.com/budget-control/">
+<style>
+/* Shared Paivio identity; calculator status colours remain functional. */
+nav,nav.scrolled{background:rgba(240,239,235,.97);border-bottom:1px solid var(--line);padding:22px max(24px,calc((100vw - 1160px)/2));gap:24px}
+.nav-logo,.footer-mark{font-family:'Syne',sans-serif;font-weight:800;text-decoration:none}
+nav .logo-rest,nav.scrolled .logo-rest{color:var(--ink)}
+nav .logo-ai{color:var(--gold)}
+.nav-links{gap:28px}
+.nav-links a,.nav-cases summary{font:500 12px 'Manrope',sans-serif;letter-spacing:0;text-transform:none;color:var(--ink);cursor:pointer}
+.nav-links a:hover,.nav-cases summary:hover{color:var(--gold)}
+.nav-cta{background:transparent!important;border:1px solid var(--line-strong);color:var(--ink)!important}
+.nav-cases{position:relative}.nav-cases summary{list-style:none}.nav-cases summary::-webkit-details-marker{display:none}.nav-cases summary:after{content:' +'}
+.case-dropdown{position:absolute;right:0;top:30px;min-width:230px;padding:20px;background:var(--bg);border:1px solid var(--line);box-shadow:0 10px 30px rgba(26,26,46,.08)}
+.nav-menu{display:none;background:none;border:0;font:500 14px 'Manrope',sans-serif;color:var(--ink)}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+.hero{background:var(--bg);color:var(--ink);min-height:0;padding-top:150px}
+.hero:after{display:none}.hero-copy h1{font-weight:500;line-height:1.08;letter-spacing:-.06em}.hero-copy h1 em{color:var(--gold);font-style:normal}.hero-copy p{color:var(--muted);font-size:17px}
+.eyebrow{color:var(--gold);background:none;border:0;border-radius:0;padding:0}.eyebrow:before{display:none}
+.btn-primary{background:var(--ink);color:var(--bg)}.btn-secondary{background:transparent;color:var(--ink);border:1px solid var(--line-strong)}
+.note-chip{background:none;color:var(--muted);border-color:var(--line)}
+.hero-panel{background:var(--surface);border-color:var(--line);border-radius:0;box-shadow:none}.panel-value{font-weight:500;line-height:1.1;font-size:clamp(30px,3vw,44px);letter-spacing:-.04em}.panel-copy{color:var(--muted)}.panel-metric{border-color:var(--line)}.panel-metric span:first-child,.panel-metric span:last-child{color:var(--ink)}
+@media(max-width:800px){nav,nav.scrolled{padding:18px 24px;flex-wrap:wrap}.nav-menu{display:block;margin-left:auto}.nav-links{display:none;width:100%;flex-direction:column;align-items:flex-start;gap:22px;padding:10px 0 18px}.nav-links.open{display:flex}.case-dropdown{position:static;margin-top:12px;box-shadow:none}.hero{padding-top:118px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+</style>
 </head>
 <body>
-<nav id="nav">
-  <a href="/" class="nav-logo">
+<nav id="nav" aria-label="Main navigation">
+  <a href="/" class="nav-logo" aria-label="Paivio home">
     <span class="logo-rest">P</span><span class="logo-ai">AI</span><span class="logo-rest">VIO</span>
   </a>
-  <ul class="nav-links">
-    <li><a href="/#services">Services</a></li>
-    <li><a href="/#method">Method</a></li>
-    <li><a href="/#ventures">Ventures</a></li>
-    <li><a href="/#contact" class="nav-cta">Let's talk</a></li>
+  <button class="nav-menu" aria-expanded="false" aria-controls="budget-navigation">Menu <span aria-hidden="true">+</span></button>
+  <ul class="nav-links" id="budget-navigation">
+    <li><a href="/#expertise">Expertise</a></li>
+    <li><a href="/#about">About Anders</a></li>
+    <li><a href="/#approach">Approach</a></li>
+    <li><details class="nav-cases"><summary>Cases</summary><div class="case-dropdown"><a href="/cases/top-funnel/">Same budget. Better leads. ↗</a></div></details></li>
+    <li><a href="/#contact" class="nav-cta">Let's talk growth ↗</a></li>
   </ul>
 </nav>
 
@@ -718,7 +746,7 @@ nav.scrolled .nav-links a:hover { color: var(--gold); }
         <h3>Talk to Paivio</h3>
         <p>If you want this turned into a client-ready or internal budget control system, we can help design the workflow around your media operation.</p>
         <div class="contact-lines">
-          <div class="contact-line"><span>Email</span><a href="mailto:hello@paivio.design">hello@paivio.design</a></div>
+          <div class="contact-line"><span>Email</span><a href="mailto:paivio.media@pm.me">paivio.media@pm.me</a></div>
           <div class="contact-line"><span>Website</span><a href="/">paiviomedia.com</a></div>
           <div class="contact-line"><span>Focus</span><span>AI-powered growth strategy, workflow design, performance systems</span></div>
         </div>
@@ -729,8 +757,8 @@ nav.scrolled .nav-links a:hover { color: var(--gold); }
 
 <footer class="footer">
   <div class="footer-inner">
-    <div class="footer-mark"><span class="r">P</span><span class="a">AI</span><span class="r">VIO</span></div>
-    <div class="footer-copy">Budget Control Tool — Paivio</div>
+    <a href="/" class="footer-mark" aria-label="Paivio home"><span class="r">P</span><span class="a">AI</span><span class="r">VIO</span></a>
+    <div class="footer-copy">Budget Control | Paivio Media</div>
   </div>
 </footer>
 
@@ -790,6 +818,15 @@ if (store('bc_daily') !== null) $('daily').value = store('bc_daily');
 ['month', 'spent', 'daily'].forEach(id => $(id).addEventListener('input', compute));
 compute();
 window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', scrollY > 60));
+</script>
+<script>
+const navMenu=document.querySelector('.nav-menu');
+const navLinks=document.getElementById('budget-navigation');
+navMenu.addEventListener('click',()=>{
+ const open=navMenu.getAttribute('aria-expanded')!=='true';
+ navMenu.setAttribute('aria-expanded',String(open));navLinks.classList.toggle('open',open);
+});
+navLinks.addEventListener('keydown',event=>{if(event.key==='Escape'){navMenu.setAttribute('aria-expanded','false');navLinks.classList.remove('open');navMenu.focus();}});
 </script>
 </body>
 </html>
