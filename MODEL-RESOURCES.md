@@ -45,3 +45,7 @@ Privacy: https://formsubmit.co/privacy.pdf
 ## Validation
 
 10 automated checks pass: existing form tests plus model metadata/schema, sitemap/footer coverage, local links/assets, fixed recipient and activation gate. Mobile widths checked for all four model pages: no horizontal overflow. Screenshots captured for the method page, Power Response mobile view and homepage footer. Existing production remains unchanged.
+
+## Launch approval
+
+The owner explicitly approved production deployment. Recipient activation and inbox receipt are confirmed. Production configuration uses email mode; the privacy notice now describes the actual fields, enquiry purpose and basis, provider/spam processing, retention criteria and rights. This notice is not a certification of provider compliance.
